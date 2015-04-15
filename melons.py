@@ -1,17 +1,18 @@
 """This file should have our melon-type classes in it."""
 
 
-class WatermelonOrder(object):
+class Melon(object):
+    """Find the comonalities and group under this parent class. """
+ 
     species = "Watermelon"
     color = "green"
     imported = False
     shape = 'natural'
     seasons = ['Fall', 'Summer']
     base_cost = 5
+    cost = 1
 
-
-    def get_price(self, qty):
-        """Calculate price, given a number of melons ordered."""
+    def get_base_price (self):       
 
         if self.imported == True:
             self.cost = self.base_cost * 1.5
@@ -20,54 +21,96 @@ class WatermelonOrder(object):
         else:
             self.cost = self.base_cost
 
+        return self.cost         
+  
+    def get_price(self, qty):
+        """Calculate price, given a number of melons ordered."""
 
         if qty >= 3:
-            self.cost = self.cost * .75
+            self.cost = get_base_price(self) * .75
         if qty >= 5:
-            self.cost = self.cost * .5
+            self.cost = get_base_price(self) * .5
 
         total = qty * self.cost   # TODO, calculate the real amount!
 
         return total
 
-Watermelon = WatermelonOrder()
-Cantaloupe = WatermelonOrder()
-Casaba = WatermelonOrder()
-Sharlyn = WatermelonOrder()
-SantaClaus = WatermelonOrder()
-Christmas = WatermelonOrder()
-HornedMelon = WatermelonOrder()
-Xigua = WatermelonOrder()
-Ogen = WatermelonOrder()
+class WatermelonOrder(Melon):
+    species = "Watermelon"
+    color = "green"
+    imported = False
+    shape = 'natural'
+    seasons = ['Fall', 'Summer']
+    base_cost = 5
 
-Cantaloupe.color = "tan"
-Casaba.color = "green"
-Sharlyn.color = "tan"
-SantaClaus.color = "green"
-HornedMelon.color = "yellow"
-Xigua.color = "black"
-Ogen.color = "tan" 
+class CantaloupeOrder(Melon):
+    species = "Cantaloupe"
+    color = "tan"
+    imported = False
+    shape = 'natural'
+    seasons = ['Spring', 'Summer']
+    base_cost = 5
 
-Casaba.imported = True
-Sharlyn.imported = True
-SantaClaus.imported = True
-HornedMelon.imported = True
-Xigua.imported = True
+class CasabaOrder(Melon):
+    species = "Casaba"
+    color = "green"
+    imported = True
+    shape = 'natural'
+    seasons = ['Spring', 'Summer', 'Fall', 'Winter']
+    base_cost = 6
 
-Xigua.shape = "square"
+class SharlynOrder(Melon):
+    species = "Sharlyn"
+    color = "tan"
+    imported = True
+    shape = 'natural'
+    seasons = ['Summer']
+    base_cost = 5
 
-Cantaloupe.seasons =["Spring", "Summer"]
-Casaba.seasons = ["Spring", "Summer", "Fall", "Winter"]
-Sharlyn.seasons = ["Summer"]
-SantaClaus.seasons = ["Winter", "Spring"]
-Christmas.seasons = ["Winter", "Spring"]
-HornedMelon.seasons = ["Summer"]
-Xigua.seasons = ["Summer"]
-Ogen.seasons = ["Spring", "Summer"]
+class SantaClausOrder(Melon):
+    species = "SantaClaus"
+    color = "green"
+    imported = True
+    shape = 'natural'
+    seasons = ['Winter', 'Spring']
+    base_cost = 5
 
-Casaba.base_cost = Casaba.base_cost + 1
-Ogen.base_cost = Ogen.base_cost + 1
+class ChristmasOrder(Melon):
+    species = "Christmas"
+    color = "green"
+    imported = False
+    shape = 'natural'
+    seasons = ['Winter', 'Spring']
+    base_cost = 5
 
+class HornedMelonOrder(Melon):
+    species = "Horned melons"
+    color = "yellow"
+    imported = True
+    shape = 'natural'
+    seasons = ['Summer']
+    base_cost = 5
+
+class XiguaOrder(Melon):
+    species = "Xigua"
+    color = "black"
+    imported = True
+    shape = 'square'
+    seasons = ['Summer']
+    base_cost = 5
+
+class OgenOrder(Melon):
+    species = "Ogen"
+    color = "tan"
+    imported = False
+    shape = 'natural'
+    seasons = ['Spring','Summer']
+    base_cost = 6
+
+w = WatermelonOrder()
+print w.get_price(2)
+HornedMelon = HornedMelonOrder()
+Casaba = CasabaOrder()
 
 print HornedMelon.get_price(2)
 print Casaba.get_price(2)
