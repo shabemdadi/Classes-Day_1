@@ -9,31 +9,9 @@ class Melon(object):
     imported = False
     shape = 'natural'
     seasons = ['Fall', 'Summer']
-    base_cost = 5
-    cost = 1
 
     def get_base_price (self):       
-
-        if self.imported == True:
-            self.cost = self.base_cost * 1.5
-        elif self.shape == "square":
-            self.cost = self.base_cost * 2
-        else:
-            self.cost = self.base_cost
-
-        return self.cost         
-  
-    def get_price(self, qty):
-        """Calculate price, given a number of melons ordered."""
-
-        if qty >= 3:
-            self.cost = get_base_price(self) * .75
-        if qty >= 5:
-            self.cost = get_base_price(self) * .5
-
-        total = qty * self.cost   # TODO, calculate the real amount!
-
-        return total
+        return 5.00        
 
 class WatermelonOrder(Melon):
     species = "Watermelon"
@@ -41,7 +19,16 @@ class WatermelonOrder(Melon):
     imported = False
     shape = 'natural'
     seasons = ['Fall', 'Summer']
-    base_cost = 5
+
+    def get_price(self, qty):
+        """Calculate price, given a number of melons ordered."""
+
+        total = self.get_base_price() * qty
+
+        if qty >= 3:
+                total = total * .75
+
+        return total
 
 class CantaloupeOrder(Melon):
     species = "Cantaloupe"
@@ -49,7 +36,17 @@ class CantaloupeOrder(Melon):
     imported = False
     shape = 'natural'
     seasons = ['Spring', 'Summer']
-    base_cost = 5
+
+    def get_price(self, qty):
+        """Calculate price, given a number of melons ordered."""
+
+        total = self.get_base_price() * qty
+
+        if qty >= 5:
+                total = total * .5
+       # TODO, calculate the real amount!
+
+        return total
 
 class CasabaOrder(Melon):
     species = "Casaba"
@@ -57,7 +54,13 @@ class CasabaOrder(Melon):
     imported = True
     shape = 'natural'
     seasons = ['Spring', 'Summer', 'Fall', 'Winter']
-    base_cost = 6
+
+    def get_price(self, qty):
+        """Calculate price, given a number of melons ordered."""
+
+        total = ((self.get_base_price() + 1)*1.5) * qty
+
+        return total
 
 class SharlynOrder(Melon):
     species = "Sharlyn"
@@ -65,7 +68,13 @@ class SharlynOrder(Melon):
     imported = True
     shape = 'natural'
     seasons = ['Summer']
-    base_cost = 5
+
+    def get_price(self, qty):
+        """Calculate price, given a number of melons ordered."""
+
+        total = (self.get_base_price()*1.5) * qty
+
+        return total
 
 class SantaClausOrder(Melon):
     species = "SantaClaus"
@@ -73,7 +82,13 @@ class SantaClausOrder(Melon):
     imported = True
     shape = 'natural'
     seasons = ['Winter', 'Spring']
-    base_cost = 5
+
+    def get_price(self, qty):
+        """Calculate price, given a number of melons ordered."""
+
+        total = (self.get_base_price()*1.5) * qty
+
+        return total
 
 class ChristmasOrder(Melon):
     species = "Christmas"
@@ -81,7 +96,13 @@ class ChristmasOrder(Melon):
     imported = False
     shape = 'natural'
     seasons = ['Winter', 'Spring']
-    base_cost = 5
+
+    def get_price(self, qty):
+        """Calculate price, given a number of melons ordered."""
+
+        total = self.get_base_price() * qty
+
+        return total
 
 class HornedMelonOrder(Melon):
     species = "Horned melons"
@@ -89,7 +110,13 @@ class HornedMelonOrder(Melon):
     imported = True
     shape = 'natural'
     seasons = ['Summer']
-    base_cost = 5
+
+    def get_price(self, qty):
+        """Calculate price, given a number of melons ordered."""
+
+        total = (self.get_base_price()*1.5) * qty
+
+        return total
 
 class XiguaOrder(Melon):
     species = "Xigua"
@@ -97,7 +124,13 @@ class XiguaOrder(Melon):
     imported = True
     shape = 'square'
     seasons = ['Summer']
-    base_cost = 5
+
+    def get_price(self, qty):
+        """Calculate price, given a number of melons ordered."""
+
+        total = ((self.get_base_price()*1.5)*2.0) * qty
+
+        return total
 
 class OgenOrder(Melon):
     species = "Ogen"
@@ -105,12 +138,20 @@ class OgenOrder(Melon):
     imported = False
     shape = 'natural'
     seasons = ['Spring','Summer']
-    base_cost = 6
+
+    def get_price(self, qty):
+        """Calculate price, given a number of melons ordered."""
+
+        total = (self.get_base_price()+1) * qty
+
+        return total
 
 w = WatermelonOrder()
+print w.get_base_price()
 print w.get_price(2)
-HornedMelon = HornedMelonOrder()
-Casaba = CasabaOrder()
 
-print HornedMelon.get_price(2)
+Casaba = CasabaOrder()
+HornedMelon = HornedMelonOrder()
+
 print Casaba.get_price(2)
+print HornedMelon.get_price(2)
