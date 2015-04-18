@@ -1,157 +1,195 @@
 """This file should have our melon-type classes in it."""
 
+import datetime
 
-class Melon(object):
+class AbstractMelon(object):
     """Find the comonalities and group under this parent class. """
- 
+    
     species = "Watermelon"
     color = "green"
     imported = False
     shape = 'natural'
     seasons = ['Fall', 'Summer']
 
-    def get_base_price (self):       
-        return 5.00        
+    def __init__(self):                                             # will raise an error if there is an attempt to create an instance of the base class
+        
+        if type(self) == AbstractMelon:
+            raise Exception
+    
+    def is_available(self, month = datetime.date.today().month):    # will determine if the melon is available on a given date, or at today's date
+        months = ['January','February','March','April','May','June','July','August','September','October','November','December']
+        current_month = months[month]
+        seasons_dict = {'Winter': months[0:3], 'Spring': months [3:6], 'Summer': months[6:9], 'Fall': months[9:12] }
+        for season in self.seasons:
+            if current_month in seasons_dict[season]:
+                return True
+            else:
+                return False
+        
+    def get_price(self, price_bump = 0):
+        base_cost = 5
+        price = base_cost + price_bump
+        
+        if self.shape == 'square':
+            price = price * 2
+        if self.imported == True:
+            price = price * 1.5
+            
+        return price
+        
 
-class WatermelonOrder(Melon):
+class WatermelonOrder(AbstractMelon):
     species = "Watermelon"
     color = "green"
     imported = False
     shape = 'natural'
     seasons = ['Fall', 'Summer']
 
-    def get_price(self, qty):
+    def get_total(self, qty):
         """Calculate price, given a number of melons ordered."""
 
-        total = self.get_base_price() * qty
+        total = self.get_price() * qty
 
         if qty >= 3:
                 total = total * .75
 
         return total
 
-class CantaloupeOrder(Melon):
+class CantaloupeOrder(AbstractMelon):
     species = "Cantaloupe"
     color = "tan"
     imported = False
     shape = 'natural'
     seasons = ['Spring', 'Summer']
 
-    def get_price(self, qty):
+    def get_total(self, qty):
         """Calculate price, given a number of melons ordered."""
 
-        total = self.get_base_price() * qty
+        total = self.get_price() * qty
 
         if qty >= 5:
                 total = total * .5
-       # TODO, calculate the real amount!
 
         return total
 
-class CasabaOrder(Melon):
+class CasabaOrder(AbstractMelon):
     species = "Casaba"
     color = "green"
     imported = True
     shape = 'natural'
     seasons = ['Spring', 'Summer', 'Fall', 'Winter']
+    price_bump = 1
 
-    def get_price(self, qty):
+    def get_total(self, qty):
         """Calculate price, given a number of melons ordered."""
 
-        total = ((self.get_base_price() + 1)*1.5) * qty
+        total = self.get_price(self.price_bump) * qty
 
         return total
 
-class SharlynOrder(Melon):
+class SharlynOrder(AbstractMelon):
     species = "Sharlyn"
     color = "tan"
     imported = True
     shape = 'natural'
     seasons = ['Summer']
 
-    def get_price(self, qty):
+    def get_total(self, qty):
         """Calculate price, given a number of melons ordered."""
 
-        total = (self.get_base_price()*1.5) * qty
+        total = self.get_price() * qty
 
         return total
 
-class SantaClausOrder(Melon):
+class SantaClausOrder(AbstractMelon):
     species = "SantaClaus"
     color = "green"
     imported = True
     shape = 'natural'
     seasons = ['Winter', 'Spring']
 
-    def get_price(self, qty):
+    def get_total(self, qty):
         """Calculate price, given a number of melons ordered."""
 
-        total = (self.get_base_price()*1.5) * qty
+        total = self.get_price() * qty
 
         return total
 
-class ChristmasOrder(Melon):
+class ChristmasOrder(AbstractMelon):
     species = "Christmas"
     color = "green"
     imported = False
     shape = 'natural'
     seasons = ['Winter', 'Spring']
 
-    def get_price(self, qty):
+    def get_total(self, qty):
         """Calculate price, given a number of melons ordered."""
 
-        total = self.get_base_price() * qty
+        total = self.get_price() * qty
 
         return total
 
-class HornedMelonOrder(Melon):
+class HornedMelonOrder(AbstractMelon):
     species = "Horned melons"
     color = "yellow"
     imported = True
     shape = 'natural'
     seasons = ['Summer']
 
-    def get_price(self, qty):
+    def get_total(self, qty):
         """Calculate price, given a number of melons ordered."""
 
-        total = (self.get_base_price()*1.5) * qty
+        total = self.get_price() * qty
 
         return total
 
-class XiguaOrder(Melon):
+class XiguaOrder(AbstractMelon):
     species = "Xigua"
     color = "black"
     imported = True
     shape = 'square'
     seasons = ['Summer']
 
-    def get_price(self, qty):
+    def get_total(self, qty):
         """Calculate price, given a number of melons ordered."""
 
-        total = ((self.get_base_price()*1.5)*2.0) * qty
+        total = self.get_price() * qty
 
         return total
 
-class OgenOrder(Melon):
+class OgenOrder(AbstractMelon):
     species = "Ogen"
     color = "tan"
     imported = False
     shape = 'natural'
     seasons = ['Spring','Summer']
+    price_bump = 1
 
-    def get_price(self, qty):
+    def get_total(self, qty):
         """Calculate price, given a number of melons ordered."""
 
-        total = (self.get_base_price()+1) * qty
+        total = self.get_price(self.price_bump) * qty
 
         return total
 
 w = WatermelonOrder()
-print w.get_base_price()
-print w.get_price(2)
+print w.get_total(2)        # 10
+print w.get_total(3)        # 11.25
 
-Casaba = CasabaOrder()
-HornedMelon = HornedMelonOrder()
+c = CasabaOrder()
+print c.get_total(2)        #18
 
-print Casaba.get_price(2)
-print HornedMelon.get_price(2)
+h = HornedMelonOrder()
+print h.get_total(2)        #15
+
+x = XiguaOrder()
+print x.get_total(1)        #15
+
+q = OgenOrder()
+print q.get_total(1)        #6
+print q.price_bump          #1
+
+print q.is_available()      #true
+
+m = AbstractMelon()                 # Should trigger error
+
